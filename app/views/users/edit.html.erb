@@ -1,0 +1,49 @@
+<nav class="navbar navbar-inverse">
+  <!-- Navbar content -->
+  <p><header>
+		<div class="header-item">
+			<nav class="nav navbar-nav navbar-left"><div class="bookers">Bookers</div></nav>
+			<nav class="nav navbar-nav navbar-right">
+				<ul class="nav-list clearfix">
+					<% if user_signed_in? %>
+						<li class="nav-list-item">
+							<%= link_to "Home", "#" %>
+						</li>
+						<li class="nav-list-item">
+							<%= link_to "Users", "#" %>
+						</li>
+						<li class="nav-list-item">
+							<%= link_to "Books", "#" %>
+						</li>
+						<li class="nav-list-item">
+							<%= link_to "logout", destroy_user_session_path, method: :delete %>
+						</li>
+					<% else %>
+						<li class="nav-list-item"><a href="#home">Home</a></li>
+						<li class="nav-list-item">
+							<a href="#about">About</a></li>
+						<li class="nav-list-item"><a href="#sign_up">sign up</a></li>
+						<li class="nav-list-item"><a href="/users/sign_in">login</a></li>
+					<% end %>
+				</ul>
+			</nav>
+		</div>
+	</header></p>
+</nav>
+
+
+<div class="container">
+	<div class="row">
+		<h2>User info</h2>
+		<%= form_for(@user) do |f| %>
+			<div class="name-box">
+				<span>Name </span><%= f.text_field :name %>
+			</div>
+			<p>image</p>
+			<%= f.attachment_field :profile_image, placeholder: "プロフィール画像" %>
+			<p>Introduction</p>
+			<%= f.text_area :introduction %>
+			<div class="update-user"><%= f.submit "Update User" %></div>
+		<% end %>
+	</div>
+</div>

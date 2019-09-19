@@ -5,11 +5,26 @@
 			<nav class="nav navbar-nav navbar-left"><div class="bookers">Bookers</div></nav>
 			<nav class="nav navbar-nav navbar-right">
 				<ul class="nav-list clearfix">
-					<li class="nav-list-item"><a href="#home">Home</a></li>
-					<li class="nav-list-item">
-						<a href="#about">About</a></li>
-					<li class="nav-list-item"><a href="#sign_up">sign up</a></li>
-					<li class="nav-list-item"><a href="#login">login</a></li>
+					<% if user_signed_in? %>
+						<li class="nav-list-item">
+							<%= link_to "Home", "#" %>
+						</li>
+						<li class="nav-list-item">
+							<%= link_to "Users", users_path %>
+						</li>
+						<li class="nav-list-item">
+							<%= link_to "Books", "#" %>
+						</li>
+						<li class="nav-list-item">
+							<%= link_to "logout", destroy_user_session_path, method: :delete %>
+						</li>
+					<% else %>
+						<li class="nav-list-item"><a href="#home">Home</a></li>
+						<li class="nav-list-item">
+							<a href="#about">About</a></li>
+						<li class="nav-list-item"><a href="#sign_up">sign up</a></li>
+						<li class="nav-list-item"><a href="/users/sign_in">login</a></li>
+					<% end %>
 				</ul>
 			</nav>
 		</div>
@@ -18,27 +33,58 @@
 
 <div class="container">
 	<div class="row">
+		<div class="col-lg-3">
 		<div class="side-bar">
 			<div class="user-box>">
-				<div class="user-info-headline">User info</div>
-				<!--ここに画像-->
-				<div class="border"></div>
-				<div name-box>name</div>
-				<div class="border"></div>
-				<div introduction-box>introduction</div>
-				<div create-bottan></div>
+				<h2>User info</h2>
+				<p><%= attachment_image_tag @user, :profile_image, :fill, 60, 60, class: "pull-left ", fallback: "no_image.jpg" %></p>
+				<table class="table">
+					<tr>
+						<th><div name-box>name</div></th>
+						<th></th>
+					</tr>
+					<tr>
+						<th><div introduction-box>introduction</div></th>
+						<th></th>
+					</tr>
+			    </table>
+				<p><button type="button" class="btn btn-white btn-lg btn-block"><%= link_to "プロフィール編集", edit_user_path(current_user.id) %></button></p>
+
 		    </div>
 		    <div class="new-book-box">
-		    	<div new-book-headline>New Book</div>
+		    	<h2>New Book</h2>
 		    	<%= form_for(@book) do |f| %>
 		    	<h4>Title</h4>
 		    	<%= f.text_field :title %>
 		    	<h4>Opinion</h4>
 		    	<%= f.text_area :body %>
-
-		    	<%= f.submit 'Create Book' %>
+		    	<button type="button" class="btn btn-primary btn-lg btn-block"><%= f.submit %>Create Book</button>
 		    	<% end %>
 		    </div>
 		</div>
+	    </div>
+	    <div class="col-lg-9">
+	    	<div class="book-list-box">
+		    	<h2>Books</h2>
+		    	    <table class="table">
+	    			    <thead>
+	    				    <tr>
+	    				    	<th></th>
+	    				    	<th>Title</th>
+	    				    	<th>Opinion</th>
+	    				    </tr>
+	    				</thead>
+	    				<tbody>
+		                <% @books.each do |list| %>
+		                    <tr>
+		                    	<td><p><%= attachment_image_tag @user, :profile_image, :fill, 60, 60, class: "pull-left ", fallback: "no_image.jpg" %></p></td>
+								<td><span class="book-content"><%= list.title %></span></td>
+					    		<td><span class="book-content"><%= list.body %></span></td>
+					    	</tr>
+					    </tbody>
+			    		<% end %>
+	    	    </table>
+	    	</div>
+	    </div>
 	</div>
 </div>

@@ -1,17 +1,13 @@
 class BooksController < ApplicationController
-	def new
-		@book = Book.new
-	end
 	def create
 		book = Book.new(book_params)
+		book.user_id = current_user.id #user_idカラムは入力出来ないので、それを埋める為の記述
 		book.save
 		redirect_to books_path
 	end
-
 	def index
-		book = Book.new(book_params)
-		book.save
-		redirect_to books_path
+		@books = Book.all
+		@book = Book.new
 	end
 	def show
 	end
