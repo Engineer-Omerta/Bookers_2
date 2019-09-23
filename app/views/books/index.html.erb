@@ -1,67 +1,22 @@
-<nav class="navbar navbar-inverse">
-  <!-- Navbar content -->
-  <p><header>
-		<div class="header-item">
-			<nav class="nav navbar-nav navbar-left"><div class="bookers">Bookers</div></nav>
-			<nav class="nav navbar-nav navbar-right">
-				<ul class="nav-list clearfix">
-					<% if user_signed_in? %>
-						<li class="nav-list-item">
-							<span class="glyphicon glyphicon-home" aria-hidden="true"></span>   <%= link_to "    Home", user_path(current_user.id) %> <!--どのユーザーか指定する必要があるからcurrentつけてる？-->
-						</li>
-						<li class="nav-list-item">
-							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>  <%= link_to "   Users", users_path %>
-						</li>
-						<li class="nav-list-item">
-							<span class="glyphicon glyphicon-book" aria-hidden="true"></span>  <%= link_to "  Books", books_path %>
-						</li>
-						<li class="nav-list-item">
-							<span class="glyphicon glyphicon-share" aria-hidden="true"></span>  <%= link_to "logout", destroy_user_session_path, method: :delete %>
-						</li>
-					<% else %>
-						<li class="nav-list-item"><a href="#home">Home</a></li>
-						<li class="nav-list-item">
-							<a href="#about">About</a></li>
-						<li class="nav-list-item"><a href="#sign_up">sign up</a></li>
-						<li class="nav-list-item"><a href="/users/sign_in">login</a></li>
-					<% end %>
-				</ul>
-			</nav>
-		</div>
-	</header></p>
-</nav>
-
+<%= render 'books/list' %>
 <div class="container">
 	<div class="row">
-		<div class="col-lg-3">
-		<div class="side-bar">
-			<div class="user-box>">
-				<h2>User info</h2>
-				<p><%= attachment_image_tag @user, :profile_image, :fill, 100, 100, class: "pull-left ", fallback: "no_image.jpg" %></p>
-				<table class="table">
-					<tr>
-						<th><div name-box>name</div></th>
-						<th><%= @user.name %></th>
-					</tr>
-					<tr>
-						<th><div introduction-box>introduction</div></th>
-						<th><%= @user.introduction %></th>
-					</tr>
-			    </table>
-				<%= link_to "", edit_user_path(current_user.id), class: "btn btn-default btn-lg btn-block glyphicon glyphicon-wrench" %>
+		<div class="error-m">
+		<% if @new.errors.any? %>
+		  <%= @new.errors.count %>error!
+		      <% @new.errors.full_messages.each do |message| %>
+		        <li class="error-m2"><%= message %></li>
+		      <% end %>
+		  </div>
+		<% end %>
+		<% if flash[:notice] %>
+		  <div class="flash-create">
+		    <%= flash[:notice] %>
+		  </div>
+		<% end %>
 
-		    </div>
-		    <div class="new-book-box">
-		    	<h2>New Book</h2>
-		    	<%= form_for(@book) do |f| %>
-		    	<h4>Title</h4>
-		    	<%= f.text_field :title %>
-		    	<h4>Opinion</h4>
-		    	<%= f.text_area :body %>
-		    	<%= f.submit "Create Book", class:"btn btn-primary btn-lg btn-block" %>
-		    	<% end %>
-		    </div>
-		</div>
+		<div class="col-lg-3">
+<%= render 'books/sidebar' %>
 	    </div>
 	    <div class="col-lg-9">
 	    	<div class="book-list-box">

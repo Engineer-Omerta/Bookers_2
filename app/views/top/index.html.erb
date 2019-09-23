@@ -41,8 +41,8 @@
 	    </p>
 	    </div>
 	    <% if user_signed_in? %>
-		    <div class="btn btn-info btn-block active"><%= link_to "Log in", users_show_path %></div>
-		    <div class="btn btn-success btn-block active"><%= link_to "Sign up", users_show_path %></div>
+		    <div class="btn btn-info btn-block active"><%= link_to "Log in", user_path(current_user.id) %></div>
+		    <div class="btn btn-success btn-block active"><%= link_to "Sign up", user_path(current_user.id) %></div>
 	    <% else %>
 	        <div class="btn btn-info btn-block active"><%= link_to "Log in", "/users/sign_in" %></div>
 		    <div class="btn btn-success btn-block active"><%= link_to "Sign up", "/users/sign_up" %></div>

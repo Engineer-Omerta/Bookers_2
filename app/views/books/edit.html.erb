@@ -1,0 +1,18 @@
+<%= render 'books/list' %>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+		<h2>Editing Book</h2>
+		<%= form_for(@book) do |f| %>
+			<div class="name-box">
+				<span>Title</span>
+				<p><%= f.text_field :title, class:"btn-lg btn-block" %></p>
+			</div>
+			<p>Opinion</p>
+			<%= f.text_area :body, class:"btn-lg btn-block" %>
+			<div class="update-book"><%= f.submit "Update Book", class:"btn btn-primary btn-lg btn-block" %></div>
+		<% end %>
+	    </div>
+	</div>
+</div>

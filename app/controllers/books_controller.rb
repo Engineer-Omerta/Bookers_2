@@ -3,24 +3,40 @@ class BooksController < ApplicationController
 	def create
 		book = Book.new(book_params)
 		book.user_id = current_user.id #user_idカラムは入力出来ないので、それを埋める為の記述
-		book.save
-		redirect_to books_path
+		@user = current_user
+		@new = book
+		@books = Book.all #render:indexの処理時、indexの@booksを読み込まない為、ここで定義する必要がある
+		if book.save
+		flash[:notice] = "You have creatad book successfully."
+		redirect_to book_path(book)
+ 	    else
+ 	    	render :index
+ 	    end
 	end
 	def index
 		@books = Book.all
-		@book = Book.new
+		@new = Book.new
 		@user = current_user
 		@users = User.all
 	end
 	def show
 		@user = current_user
-		
+		@new = Book.new
 		@book = Book.find(params[:id])
 	end
 	def destroy
 		@book = Book.find(params[:id])
 		@book.destroy
 		redirect_to user_path(current_user.id)
+	end
+
+	def edit
+		@book = Book.find(params[:id])
+	end
+	def update
+		@book = Book.find(params[:id])
+	    @book.update(book_params)
+		redirect_to book_path(@book)
 	end
 
 	private
