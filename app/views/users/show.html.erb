@@ -1,0 +1,59 @@
+<%= render 'users/list' %>
+
+<div class="container">
+	<div class="row">
+		<div class="col-lg-3">
+		<div class="side-bar">
+			<div class="user-box>">
+				<h2>User info</h2>
+				<p><%= attachment_image_tag @user, :profile_image, :fill, 100, 100, format: 'jpeg', class: "pull-left ", fallback: "no_image.jpg" %></p>
+				<table class="table">
+					<tr>
+						<th><div name-box>name</div></th>
+						<th><%= @user.name %></th>
+					</tr>
+					<tr>
+						<th><div introduction-box>introduction</div></th>
+						<th><%= @user.introduction %></th>
+					</tr>
+			    </table>
+				<%= link_to "", edit_user_path(current_user.id), class: "btn btn-default btn-lg btn-block glyphicon glyphicon-wrench" %>
+		    </div>
+		    <div class="new-book-box">
+		    	<h2>New book</h2>
+		    	<%= form_for(@book) do |f| %>
+		    	<h4>Title</h4>
+		    	<%= f.text_field :title %>
+		    	<h4>Opinion</h4>
+		    	<%= f.text_area :body %>
+
+		    	<div class="create-book"><%= f.submit 'Create Book' %></div>
+		    	<% end %>
+		    </div>
+		</div>
+	    </div>
+	    <div class="col-lg-9">
+	    	<div class="user-list-box">
+		    	<h2>Books</h2>
+		    	    <table class="table">
+	    			    <thead>
+	    				    <tr>
+	    				    	<th>Title</th>
+	    				    	<th>Opinion</th>
+	    				    	<th></th>
+	    				    </tr>
+	    				</thead>
+	    				<tbody>
+		                <% @books.each do |list| %>
+		                    <tr>
+		                    	<td><p><%= attachment_image_tag list.user, :profile_image, :fill, 60, 60, class: "pull-left ", fallback: "no_image.jpg" %></p></td>
+								<td><span class="book-content"><%= list.title %></span></td>
+					    		<td><span class="book-content">show</span></td>
+					    	</tr>
+					    </tbody>
+			    		<% end %>
+	    	    </table>
+	    	</div>
+	    </div>
+	</div>
+</div>

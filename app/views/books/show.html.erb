@@ -37,7 +37,7 @@
 		<div class="side-bar">
 			<div class="user-box>">
 				<h2>User info</h2>
-				<p><%= attachment_image_tag @user, :profile_image, :fill, 100, 100, class: "pull-left ", fallback: "no_image.jpg" %></p>
+				<p><%= attachment_image_tag @user, :profile_image, :fill, 100, 100, format: 'jpeg', class: "pull-left ", fallback: "no_image.jpg" %></p>
 				<table class="table">
 					<tr>
 						<th><div name-box>name</div></th>
@@ -49,43 +49,35 @@
 					</tr>
 			    </table>
 				<%= link_to "", edit_user_path(current_user.id), class: "btn btn-default btn-lg btn-block glyphicon glyphicon-wrench" %>
-
 		    </div>
 		    <div class="new-book-box">
-		    	<h2>New Book</h2>
+		    	<h2>New book</h2>
 		    	<%= form_for(@book) do |f| %>
 		    	<h4>Title</h4>
 		    	<%= f.text_field :title %>
 		    	<h4>Opinion</h4>
 		    	<%= f.text_area :body %>
-		    	<%= f.submit "Create Book", class:"btn btn-primary btn-lg btn-block" %>
+
+		    	<div class="create-book"><%= f.submit 'Create Book' %></div>
 		    	<% end %>
 		    </div>
 		</div>
 	    </div>
 	    <div class="col-lg-9">
-	    	<div class="book-list-box">
-		    	<h2>Books</h2>
+	    	<div class="user-list-box">
+		    	<h2>Book detail</h2>
 		    	    <table class="table">
-	    			    <thead>
-	    				    <tr>
-	    				    	<th></th>
-	    				    	<th>Title</th>
-	    				    	<th>Opinion</th>
-	    				    </tr>
-	    				</thead>
 	    				<tbody>
-		                <% @books.each do |list| %>
 		                    <tr>
-		                    	<td><p><%= attachment_image_tag list.user, :profile_image, :fill, 60, 60, class: "pull-left ", fallback: "no_image.jpg" %></p></td>
-		                    	<!-- ↑　list.userを使う事により、listが参照している@booksの中のuserが参照されることになる
-		                    		アソシエーションによって各bookデータに関連づけられているユーザーデータが表示されるという仕組み
-		                    		@userでは今のコントローラーの記述により自分の画像しか出てこない-->
-								<td><span class="book-content"><%= list.title %></span></td>
-					    		<td><span class="book-content"><%= list.body %></span></td>
+		                    	<td><p><%= attachment_image_tag @book.user, :profile_image, :fill, 60, 60, class: "pull-left ", fallback: "no_image.jpg" %></p></td>
+								<td><span class="book-content"><%= @book.title %></span></td>
+					    		<td><span class="book-content"><%= @book.body %></span></td>
+					    		<% if @book.user == current_user %>
+					    		<td>Edit</td>
+					    		<td><%= link_to "Destroy", book_path(@book), method: :delete %></td>
+					    		<% end %>
 					    	</tr>
 					    </tbody>
-			    		<% end %>
 	    	    </table>
 	    	</div>
 	    </div>

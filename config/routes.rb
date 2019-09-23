@@ -1,8 +1,7 @@
 Rails.application.routes.draw do
-  get 'users/show'
+  root 'top#index'
   devise_for :users
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root 'books#index'
-  resources :books, only: [:new, :create, :index, :show]
+  resources :books, only: [:new, :create, :index, :show, :destroy]
   resources :users, only: [:index, :edit, :update, :show]
 end

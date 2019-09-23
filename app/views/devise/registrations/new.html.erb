@@ -1,36 +1,75 @@
+<nav class="navbar navbar-inverse">
+  <!-- Navbar content -->
+  <p><header>
+    <div class="header-item">
+      <nav class="nav navbar-nav navbar-left"><div class="bookers">Bookers</div></nav>
+      <nav class="nav navbar-nav navbar-right">
+        <ul class="nav-list clearfix">
+          <% if user_signed_in? %>
+            <li class="nav-list-item">
+              <%= link_to "Home", user_path(current_user.id) %>
+            </li>
+            <li class="nav-list-item">
+              <%= link_to "Users", "#" %>
+            </li>
+            <li class="nav-list-item">
+              <%= link_to "Books", "#" %>
+            </li>
+            <li class="nav-list-item">
+              <%= link_to "logout", destroy_user_session_path, method: :delete %>
+            </li>
+          <% else %>
+            <li class="nav-list-item"><a href="#home">Home</a></li>
+            <li class="nav-list-item">
+              <a href="#about">About</a></li>
+            <li class="nav-list-item"><a href="/users/sign_up">sign up</a></li>
+            <li class="nav-list-item"><a href="/users/sign_in">login</a></li>
+          <% end %>
+        </ul>
+      </nav>
+    </div>
+  </header></p>
+</nav>
+
+<div class="container">
+  <div class="row">
+
 <h2>Sign up</h2>
 
-<!--form_forで利用するモデルを取得し、モデル名としてresource_nameを使用できるようにしています。
-  今回は、rails g devise Userで作成したUserを取得しています。とは？-->
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+        <!--form_forで利用するモデルを取得し、モデル名としてresource_nameを使用できるようにしています。
+          今回は、rails g devise Userで作成したUserを取得しています。とは？-->
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+          <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
+          <div class="field">
+            <%= f.label :name %><br />
+            <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
+          </div>
+
+          <div class="field">
+            <%= f.label :email %><br />
+            <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+          </div>
+
+          <div class="field">
+            <%= f.label :password %>
+            <% if @minimum_password_length %>
+            <em>(<%= @minimum_password_length %> characters minimum)</em>
+            <% end %><br />
+            <%= f.password_field :password, autocomplete: "new-password" %>
+          </div>
+
+          <div class="field">
+            <%= f.label :password_confirmation %><br />
+            <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+          </div>
+
+          <div class="actions">
+            <%= f.submit "Sign up" %>
+          </div>
+        <% end %>
+
+        <%= render "devise/shared/links" %>
+
+    </div>
   </div>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>

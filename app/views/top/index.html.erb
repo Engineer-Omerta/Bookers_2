@@ -1,0 +1,52 @@
+<nav class="navbar navbar-inverse">
+  <!-- Navbar content -->
+  <p><header>
+		<div class="header-item">
+			<nav class="nav navbar-nav navbar-left"><div class="bookers">Bookers</div></nav>
+			<nav class="nav navbar-nav navbar-right">
+				<ul class="nav-list clearfix">
+					<% if user_signed_in? %>
+						<li class="nav-list-item">
+							<span class="glyphicon glyphicon-home" aria-hidden="true"></span>   <%= link_to "    Home", user_path(current_user.id) %> <!--どのユーザーか指定する必要があるからcurrentつけてる？-->
+						</li>
+						<li class="nav-list-item">
+							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>  <%= link_to "   Users", users_path %>
+						</li>
+						<li class="nav-list-item">
+							<span class="glyphicon glyphicon-book" aria-hidden="true"></span>  <%= link_to "  Books", books_path %>
+						</li>
+						<li class="nav-list-item">
+							<span class="glyphicon glyphicon-share" aria-hidden="true"></span>  <%= link_to "logout", destroy_user_session_path, method: :delete %>
+						</li>
+					<% else %>
+						<li class="nav-list-item"><a href="#home"><span class="glyphicon glyphicon-book" aria-hidden="true"></span>  Home</a></li>
+						<li class="nav-list-item">
+							<a href="#about"><span class="glyphicon glyphicon-barcode" aria-hidden="true"></span>    About</a></li>
+						<li class="nav-list-item"><a href="/users/sign_up"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>  sign up</a></li>
+						<li class="nav-list-item"><a href="/users/sign_in"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>  login</a></li>
+					<% end %>
+				</ul>
+			</nav>
+		</div>
+	</header></p>
+</nav>
+
+<div class="top-page">
+	<div class="top-content">
+		<div class="top-headline">
+		<h1>welcome to <span class="glyphicon glyphicon-book" aria-hidden="true"></span>Bookers  !!</h1>
+		<p>In <span class="glyphicon glyphicon-book" aria-hidden="true"></span>Bookers,<br>
+		you can share and exchange your opinions, inpressions, and emotions<br>
+		about varioius books!
+	    </p>
+	    </div>
+	    <% if user_signed_in? %>
+		    <div class="btn btn-info btn-block active"><%= link_to "Log in", users_show_path %></div>
+		    <div class="btn btn-success btn-block active"><%= link_to "Sign up", users_show_path %></div>
+	    <% else %>
+	        <div class="btn btn-info btn-block active"><%= link_to "Log in", "/users/sign_in" %></div>
+		    <div class="btn btn-success btn-block active"><%= link_to "Sign up", "/users/sign_up" %></div>
+		<% end %>
+	    <p class="copy-right">CopyRight Infratop.inc</p>
+	</div>
+</div>
