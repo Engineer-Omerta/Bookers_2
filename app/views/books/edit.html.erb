@@ -1,6 +1,11 @@
-<%= render 'books/list' %>
 
 <div class="container">
+	    <% if @book.errors.any? %>
+	      <%= @book.errors.count %>error!
+	      <% @book.errors.full_messages.each do |message| %>
+	        <%= message %>
+	      <% end %>
+		<% end %>
 	<div class="row">
 		<div class="col-md-6 col-md-offset-3">
 		<h2>Editing Book</h2>
@@ -16,3 +21,4 @@
 	    </div>
 	</div>
 </div>
+

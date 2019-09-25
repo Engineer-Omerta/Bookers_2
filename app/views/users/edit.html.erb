@@ -1,7 +1,11 @@
-<%= render 'users/list' %>
-
 
 <div class="container">
+	    <% if @user.errors.any? %>
+	      <%= @user.errors.count %>error!
+	      <% @user.errors.full_messages.each do |message| %>
+	        <%= message %>
+	      <% end %>
+		<% end %>
 	<div class="row">
 		<h2>User info</h2>
 		<%= form_for(@user) do |f| %>

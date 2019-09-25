@@ -1,4 +1,4 @@
-<%= render 'books/list' %>
+
 <div class="container">
 	<div class="row">
 		<div class="error-m">
@@ -36,7 +36,7 @@
 		                    	<!-- ↑　list.userを使う事により、listが参照している@booksの中のuserが参照されることになる
 		                    		アソシエーションによって各bookデータに関連づけられているユーザーデータが表示されるという仕組み
 		                    		@userでは今のコントローラーの記述により自分の画像しか出てこない-->
-								<td><span class="book-content"><%= list.title %></span></td>
+								<td><%= link_to "#{list.title}", book_path(list) %></td>
 					    		<td><span class="book-content"><%= list.body %></span></td>
 					    	</tr>
 					    </tbody>

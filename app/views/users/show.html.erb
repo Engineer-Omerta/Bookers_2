@@ -1,6 +1,16 @@
-<%= render 'users/list' %>
 
 <div class="container">
+	    <% if @user.errors.any? %>
+		  <%= @user.errors.count %>error!
+		      <% @user.errors.full_messages.each do |message| %>
+		        <%= message %>
+		      <% end %>
+		<% end %>
+	    <% if flash[:notice] %>
+		  <div class="flash-create">
+		    <%= flash[:notice] %>
+		  </div>
+		<% end %>
 	<div class="row">
 		<div class="col-lg-3">
 		<div class="side-bar">
@@ -47,7 +57,7 @@
 		                <% @books.each do |list| %>
 		                    <tr>
 		                    	<td><p><%= attachment_image_tag list.user, :profile_image, :fill, 60, 60, class: "pull-left ", fallback: "no_image.jpg" %></p></td>
-								<td><%= link_to book_path(list) %><%= list.title %></td>
+								<td><%= link_to "#{list.title}", book_path(list) %></td>
 					    		<td><%= list.body %></td>
 					    	</tr>
 					    </tbody>
