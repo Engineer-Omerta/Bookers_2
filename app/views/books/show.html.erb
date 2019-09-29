@@ -28,9 +28,9 @@
 		    	<h2>New Book</h2>
 		    	<%= form_for(@new) do |f| %>
 		    	<h4>Title</h4>
-		    	<%= f.text_field :title %>
+		    	<%= f.text_field :title, class: "side-bar-box" %>
 		    	<h4>Opinion</h4>
-		    	<%= f.text_area :body %>
+		    	<%= f.text_area :body, class: "side-bar-box" %>
 		    	<%= f.submit "Create Book", class:"btn btn-primary btn-lg btn-block" %>
 		    	<% end %>
 		    </div>
@@ -55,6 +55,67 @@
 					    </tbody>
 	    	    </table>
 	    	</div>
+            <div class="like-and-comment clearfix">
+            	<div class="iine">
+			    	<% if @book.favorited_by?(current_user) %><!--他人のいいねを消せないのはどういう仕組みなのか？？-->
+			    	    <li>
+			    	    	<%= link_to book_favorites_path(@book), method: :delete do %>
+			    	    	<!--すでに自分がいいねしていたらいいねを削除した上で削除したページにリンクする？？-->
+			    	    	<i class="fa fa-heart" aria-hidden="true" style="color: red;"></i>
+			    	    	<%= @book.favorites.count %><%= link_to 'いいね', book_favorite_path(@book, @favorite) %>
+			    	    	<% end %>
+			    	    </li>
+			    	<% else %>
+			    	    <li>
+			    	    	<%= link_to book_favorites_path(@book), method: :post do %>
+			    	    	  <i class="fa fa-heart-o" aria-hidden="true"></i>
+			    	    	  <%= @book.favorites.count %><%= link_to 'いいね', book_favorite_path(@book, @favorite) %>
+			    	    	<% end %>
+			    	    </li>
+			    	<% end %>
+		        </div>
+
+		    		<li>
+		    			<i class="fa fa-comment"></i><!--吹き出しアイコン-->
+		    		    <%= @book.post_comments.count %>
+	    	</div>
+	    	    <div class="comment-list bt style-2" id="comments">
+	    	    	<div class="float-wrapper">
+	    	    		<h4 class="comment-count"><%= @book.post_comments.count %>件コメント</h4>
+	    	    		<ol>
+	    	    			<% @book.post_comments.each do |post_comment| %>
+	    	    			<li class="comment">
+	    	    				<div class="comment-body bb">
+	    	    					<div class="comment-text">
+	    	    						<div class=" comment-author">
+	    	    							<a><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>Written by </a><%= post_comment.user.name %>
+	    	    						    <span class="comment-meta">
+	    	    							    <span class="comment-date"><%= post_comment.created_at.strftime('%Y/%m/%d') %></span>
+	    	    						    </span>
+	    	    						</div>
+	    	    						<div class="comment-entry"><%= post_comment.comment %></div>
+	    	    					</div>
+	    	    					<% if post_comment.user == current_user %>
+	    	    					<%= link_to 'edit', edit_book_post_comment_path(@book, post_comment) %>
+	    	    					<%= link_to 'delete', book_post_comment_path(@book, post_comment), method: :delete %>
+	    	    					<!--ネストしているものは変数2つを指定する必要がある　　　　↑-->
+	    	    					<% end %>
+	    	    				</div>
+	    	    			</li>
+	    	    			<% end %>
+	    	    		</ol>
+	    	    	</div>
+	    	    </div>
+	    	    <%= form_for [@book, @post_comment] do |f| %>
+	    	    <!--コメントはbookモデルに結び付いたpost_commentモデルなのでここに2つ書く必要がある
+	    	    またpost_commentをcreateするリクエストはルーティングがネスト状態なので上記2つの情報が必要-->
+	    	        <div class="row">
+	    	        	<div class="col-sm-12">
+	    	        		<%= f.text_area :comment, rows:'5', class: "form-control",placeholder: "コメントをここに" %>
+	    	        	</div>
+	    	        </div>
+	    	        <%= f.submit "送信する", class: "btn btn-lg btn-base-1 mt-20 pull-right" %>
+	    	    <% end %>
 	    </div>
 	</div>
 </div>

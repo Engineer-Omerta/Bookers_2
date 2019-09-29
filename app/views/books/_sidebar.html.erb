@@ -19,10 +19,10 @@
 		    	<h2>New Book</h2>
 		    	<%= form_for(@new) do |f| %>
 		    	<h4>Title</h4>
-		    	<%= f.text_field :title %>
+		    	<%= f.text_field :title, class: "side-bar-box" %>
 		    	<h4>Opinion</h4>
-		    	<%= f.text_area :body %>
-		    	<%= f.submit "Create Book", class:"btn btn-primary btn-lg btn-block" %>
+	    		<%= f.text_area :body, class: "side-bar-box" %>
+		    	<%= f.submit "Create Book", class: "btn btn-primary btn-lg btn-block" %>
 		    	<% end %>
 		    </div>
 		</div>

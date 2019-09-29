@@ -1,0 +1,22 @@
+
+<div class="container">
+	    <% if @book.errors.any? %>
+	      <%= @book.errors.count %>error!
+	      <% @book.errors.full_messages.each do |message| %>
+	        <%= message %>
+	      <% end %>
+		<% end %>
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+		<h2>Editing Comment</h2>
+		<%= form_for [@book, @post_comment] do |f| %> <!--ネストしているので変数を二つ設定しなければならないのに注意！！-->
+			<div class="name-box">
+				<span>Comment</span>
+				<p><%= f.text_area :comment, class:"btn-lg btn-block" %></p>
+			</div>
+			<div class="update-book"><%= f.submit "Update Comment", class:"btn btn-primary btn-lg btn-block" %></div>
+		<% end %>
+	    </div>
+	</div>
+</div>
+
